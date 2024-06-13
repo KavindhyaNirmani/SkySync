@@ -25,7 +25,7 @@ export const StateContextProvider = ({ children }) => {
                 'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
                 'X-RapidAPI-Host': 'visual-crossing-weather.p.rapidapi.com'
             }
-        };
+        }
 
         try {
             const response = await axios.request(options);
@@ -39,7 +39,7 @@ export const StateContextProvider = ({ children }) => {
             // if the api throws error.
             alert('This place does not exist')
         }
-    };
+    }
 
     useEffect(() => {
         fetchWeather()
@@ -59,7 +59,7 @@ export const StateContextProvider = ({ children }) => {
         }}>
             {children}
         </StateContext.Provider>
-    );
-};
+    )
+}
 
-export const useStateContext = () => useContext(StateContext);
+export const useStateContext = () => useContext(StateContext)
