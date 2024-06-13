@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import './App.css';
 import search from './assets/icons/search.svg';
+import { useStateContext } from './Context';
+import { WeatherCard } from './Components';
 
 function App() {
   const [input, setInput] = useState('');
+  //const {weather} = useStateContext()
+  //console.log(weather)
 
   return (
     <div className='w-full h-screen text-white px-8'>
@@ -15,6 +19,8 @@ function App() {
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
                 // submit the form
+
+                submitCity()
               }
             }}
             type="text"
@@ -25,6 +31,18 @@ function App() {
           />
         </div>
       </nav>
+      <BackgroundLayout></BackgroundLayout>
+      <main className='w-full flex-wrap gap-8 py-[10%] items-center justify-center'>
+      <WeatherCard
+          place={thisLocation}
+          windspeed={weather.wspd}
+          humidity={weather.humidity}
+          temperature={weather.temp}
+          heatIndex={weather.heatindex}
+          iconString={weather.conditions}
+          conditions={weather.conditions}
+        />
+      </main>
     </div>
   );
 }
