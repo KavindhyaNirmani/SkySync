@@ -1,53 +1,47 @@
 import { useContext, createContext, useState, useEffect } from "react";
-import axios from 'axios'
+import axios from 'axios';
 
-const StateContext = createContext()
+const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-    const [weather, setWeather] = useState({})
-    const [values, setValues] = useState([])
-    const [place, setPlace] = useState('Jaipur')
-    const [thisLocation, setLocation] = useState('')
+    const [weather, setWeather] = useState({});
+    const [values, setValues] = useState([]);
+    const [place, setPlace] = useState('Jaipur');
+    const [thisLocation, setLocation] = useState('');
 
     // fetch api
     const fetchWeather = async () => {
         const options = {
             method: 'GET',
-            url: 'https://visual-crossing-weather.p.rapidapi.com/forecast',
+            url: 'https://api.openweathermap.org/data/2.5/weather',
             params: {
-                aggregateHours: '24',
-                location: place,
-                contentType: 'json',
-                unitGroup: 'metric',
-                shortColumnNames: 0,
+                q: place,
+                units: 'metric',
+                appid: import.meta.env.VITE_API_KEY,
             },
-            headers: {
-                'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
-                'X-RapidAPI-Host': 'visual-crossing-weather.p.rapidapi.com'
-            }
-        }
+        };
 
         try {
             const response = await axios.request(options);
-            console.log(response.data)
-            const thisData = Object.values(response.data.locations)[0]
-            setLocation(thisData.address)
-            setValues(thisData.values)
-            setWeather(thisData.values[0])
+            console.log(response.data);
+            const thisData = response.data;
+            setLocation(thisData.name);
+            setValues([thisData]); // For consistency, wrap thisData in an array
+            setWeather(thisData);
         } catch (e) {
             console.error(e);
             // if the api throws error.
-            alert('This place does not exist')
+            alert('This place does not exist');
         }
-    }
+    };
 
     useEffect(() => {
-        fetchWeather()
-    }, [place])
+        fetchWeather();
+    }, [place]);
 
     useEffect(() => {
-        console.log(values)
-    }, [values])
+        console.log(values);
+    }, [values]);
 
     return (
         <StateContext.Provider value={{
@@ -59,7 +53,7 @@ export const StateContextProvider = ({ children }) => {
         }}>
             {children}
         </StateContext.Provider>
-    )
-}
+    );
+};
 
-export const useStateContext = () => useContext(StateContext)
+export const useStateContext = () => useContext(StateContext);

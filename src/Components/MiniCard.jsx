@@ -1,3 +1,8 @@
+export {default as BackgroundLayout} from './BackgroundLayout'
+export {default as MiniCard} from './MiniCard'
+export {default as WeatherCard} from './WeatherCard'
+
+
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import sun from '../assets/icons/sun.png'
