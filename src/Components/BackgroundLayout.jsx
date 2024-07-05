@@ -12,7 +12,7 @@ import Sunny from '../assets/images/Sunny.jpg'
 const BackgroundLayout = () => {
 
   const { weather } = useStateContext()
-  const [image, setImage] = useState(Clear)
+  const [image, setImage] = useState(Stormy)
 
   useEffect(() => {
     if (weather.conditions) {
@@ -30,6 +30,9 @@ const BackgroundLayout = () => {
       } else if (imageString.toLowerCase().includes('thunder') || imageString.toLowerCase().includes('storm')) {
         setImage(Stormy)
       }
+     else if (imageString.toLowerCase().includes('sunny') || imageString.toLowerCase().includes('storm')) {
+      setImage(Sunny)
+    }
     }
   }, [weather])
 
